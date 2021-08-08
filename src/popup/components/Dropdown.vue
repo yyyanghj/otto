@@ -1,7 +1,7 @@
 <template>
   <div ref="el" class="dropdown">
     <div class="dropdown-select" @click.stop="showOptions = true">{{ text }}</div>
-    <icon-heroicons-outline-chevron-down class="icon" />
+    <icon-feather-chevron-down class="icon" />
     <div
       v-show="showOptions"
       class="dropdown-list"
@@ -76,20 +76,21 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   align-items: center;
-  width: 100px;
+  width: 120px;
   height: 36px;
   border: 1px solid var(--color-natural-3);
   border-radius: 36px;
   font-size: 14px;
+  padding: 0 12px;
 
   .dropdown-select {
-    width: 80px;
+    flex: 1;
     height: 36px;
-    padding: 0 12px;
     line-height: 36px;
   }
 
   .icon {
+    flex-shrink: 0;
     display: block;
     width: 20px;
     height: 20px;
@@ -97,7 +98,7 @@ onUnmounted(() => {
   }
 
   .dropdown-list {
-    width: 100px;
+    width: 120px;
     display: block;
     position: fixed;
     left: 0;
