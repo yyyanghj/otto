@@ -4,6 +4,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     IconFeatherTrash: typeof import('virtual:vite-icons/feather/trash')['default']
+    IconHeroiconsOutlineChevronDown: typeof import('virtual:vite-icons/heroicons-outline/chevron-down')['default']
     IconHeroiconsOutlineCog: typeof import('virtual:vite-icons/heroicons-outline/cog')['default']
     IconHeroiconsOutlineTrash: typeof import('virtual:vite-icons/heroicons-outline/trash')['default']
     IconHeroiconsOutlineViewGrid: typeof import('virtual:vite-icons/heroicons-outline/view-grid')['default']

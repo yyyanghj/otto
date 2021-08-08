@@ -4,6 +4,7 @@
       <div class="filter-box">
         <input v-model="filterText" class="filter-input" type="text" />
       </div>
+      <Dropdown v-model:value="filterType" :options="dropdownOptions" />
     </header>
 
     <section class="list">
@@ -34,11 +35,18 @@ import { ref, computed } from 'vue';
 import { useExtensions } from './use-extension';
 import { isApp, isExtension } from './utils';
 import Extension from './components/Extension.vue';
+import Dropdown from './components/Dropdown.vue';
 
 const { allExtensions, toggleEnabled, launchApp, uninstall } = useExtensions();
 
 const filterType = ref<null | 'hosted_app' | 'extension'>(null);
 const filterText = ref<string>('');
+
+const dropdownOptions = [
+  { text: 'All', value: null },
+  { text: 'App', value: 'hosted_app' },
+  { text: 'Extension', value: 'extension' },
+];
 
 const extensions = computed(() => {
   return allExtensions.value.filter(ext => {
@@ -72,6 +80,7 @@ const handleUninstall = (ext: chrome.management.ExtensionInfo) => {
   display: flex;
   flex-flow: column nowrap;
   width: 375px;
+  min-height: 240px;
   max-height: 600px;
   overflow: hidden;
 
@@ -86,10 +95,11 @@ const handleUninstall = (ext: chrome.management.ExtensionInfo) => {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      flex: 1;
       background-color: var(--color-natural-3);
       height: 36px;
       border-radius: 36px;
+      margin-right: 8px;
     }
 
     .filter-input {
