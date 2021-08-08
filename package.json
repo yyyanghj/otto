@@ -1,6 +1,7 @@
 {
-  "name": "y-extension-manager",
-  "version": "0.0.0",
+  "name": "otto",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
