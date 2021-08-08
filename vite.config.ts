@@ -27,7 +27,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    watch: {},
+    watch: process.env.WATCH == '1' ? {} : null,
     rollupOptions: {
       input: {
         popup: 'popup.html',

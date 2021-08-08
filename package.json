@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "export WATCH=1 && vite build",
     "build": "vite build",
     "serve": "vite preview"
   },
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@iconify/json": "^1.1.384",
     "@types/chrome": "^0.0.154",
+    "@types/node": "^16.4.13",
     "@vitejs/plugin-vue": "^1.3.0",
     "@vue/compiler-sfc": "^3.0.5",
     "eslint": "^7.32.0",

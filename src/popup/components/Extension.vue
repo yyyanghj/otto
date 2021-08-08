@@ -11,6 +11,10 @@
       <div v-show="label" class="label">{{ label }}</div>
 
       <div class="action">
+        <div class="icon" :class="{ disabled: !extension.optionsUrl }" @click="handleClickSetting">
+          <icon-heroicons-outline-cog />
+        </div>
+
         <div class="icon" @click="handleClickTrash">
           <icon-heroicons-outline-trash />
         </div>
@@ -57,6 +61,10 @@ const handleClick = () => {
 const handleClickTrash = () => {
   emit('click-trash', props.extension);
 };
+
+const handleClickSetting = () => {
+  utils.openOptionPage(props.extension);
+};
 </script>
 
 <style lang="less">
@@ -87,6 +95,7 @@ const handleClickTrash = () => {
     height: 24px;
     border-radius: 8px;
     overflow: hidden;
+    margin-left: 8px;
 
     img {
       width: 100%;
@@ -157,6 +166,10 @@ const handleClickTrash = () => {
     background-color: var(--color-natural-2);
     &:hover {
       background-color: var(--color-natural-3);
+    }
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
     }
   }
 }

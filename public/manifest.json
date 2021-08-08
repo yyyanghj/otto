@@ -13,6 +13,7 @@
     "128": "assets/icon.png"
   },
   "action": {
+    "default_title": "Otto",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icon.png",

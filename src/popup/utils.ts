@@ -25,3 +25,9 @@ export function isApp(ext: chrome.management.ExtensionInfo) {
 export function isDevExt(ext: chrome.management.ExtensionInfo) {
   return ext.installType === 'development';
 }
+
+export function openOptionPage(ext: chrome.management.ExtensionInfo) {
+  chrome.tabs.create({
+    url: ext.optionsUrl,
+  });
+}
