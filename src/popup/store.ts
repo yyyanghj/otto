@@ -1,5 +1,5 @@
 import * as utils from './utils';
-import { ref, computed } from 'vue';
+import { ref, computed, inject, InjectionKey, Ref, provide } from 'vue';
 
 const getOrder = (ext: chrome.management.ExtensionInfo) => {
   if (utils.isApp(ext)) {
@@ -13,15 +13,27 @@ const getOrder = (ext: chrome.management.ExtensionInfo) => {
   return 0;
 };
 
-export function useExtensions() {
+type Store = {
+  allExtensions: Ref<chrome.management.ExtensionInfo[]>;
+  initExtensions: () => void;
+  toggleEnabled: (id: string) => Promise<void>;
+  launchApp: (id: string) => Promise<void>;
+  uninstall: (id: string) => Promise<void>;
+};
+
+const key: InjectionKey<Store> = Symbol();
+
+export function injectStore() {
   const allExtensions = ref<chrome.management.ExtensionInfo[]>([]);
 
-  utils.getAll().then(allExt => {
-    allExtensions.value = allExt.sort((a, b) => {
-      return getOrder(b) - getOrder(a);
+  const initExtensions = () => {
+    utils.getAll().then(allExt => {
+      allExtensions.value = allExt.sort((a, b) => {
+        return getOrder(b) - getOrder(a);
+      });
+      console.log(allExtensions.value);
     });
-    console.log(allExtensions.value);
-  });
+  };
 
   const toggleEnabled = async (id: string) => {
     const ext = allExtensions.value.find(ext => ext.id === id);
@@ -49,10 +61,19 @@ export function useExtensions() {
     allExtensions.value = allExtensions.value.filter(ext => ext.id !== id);
   };
 
-  return {
+  const store = {
     allExtensions,
+    initExtensions,
     toggleEnabled,
     launchApp,
     uninstall,
   };
+
+  provide(key, store);
+
+  return store;
+}
+
+export function useStore() {
+  return inject(key) as Store;
 }

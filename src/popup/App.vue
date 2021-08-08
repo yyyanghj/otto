@@ -7,15 +7,7 @@
       <Dropdown v-model:value="filterType" :options="dropdownOptions" />
     </header>
 
-    <section class="list">
-      <Extension
-        v-for="ext of extensions"
-        :key="ext.id"
-        :extension="ext"
-        @click="handleClick"
-        @click-trash="handleUninstall"
-      />
-    </section>
+    <ExtensionList :extensions="extensions" layout="list" />
 
     <!-- <footer class="footer">
       <div class="layout-options">
@@ -32,12 +24,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useExtensions } from './use-extension';
-import { isApp, isExtension } from './utils';
-import Extension from './components/Extension.vue';
-import Dropdown from './components/Dropdown.vue';
+import { injectStore } from './store';
 
-const { allExtensions, toggleEnabled, launchApp, uninstall } = useExtensions();
+const { allExtensions, initExtensions } = injectStore();
+
+initExtensions();
 
 const filterType = ref<null | 'hosted_app' | 'extension'>(null);
 const filterText = ref<string>('');
@@ -59,20 +50,6 @@ const extensions = computed(() => {
     return true;
   });
 });
-
-const handleClick = async (ext: chrome.management.ExtensionInfo) => {
-  if (isApp(ext)) {
-    return launchApp(ext.id);
-  }
-
-  if (isExtension(ext)) {
-    return toggleEnabled(ext.id);
-  }
-};
-
-const handleUninstall = (ext: chrome.management.ExtensionInfo) => {
-  uninstall(ext.id);
-};
 </script>
 
 <style lang="less">
@@ -111,12 +88,6 @@ const handleUninstall = (ext: chrome.management.ExtensionInfo) => {
       height: 100%;
       background: transparent;
     }
-  }
-
-  .list {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 24px;
   }
 
   .footer {

@@ -53,8 +53,6 @@ onMounted(() => {
   requestAnimationFrame(() => {
     if (el.value) {
       const rect = el.value.getBoundingClientRect();
-      console.log('rect', rect);
-
       const top = rect.top + rect.height + 4;
       const left = rect.left;
 

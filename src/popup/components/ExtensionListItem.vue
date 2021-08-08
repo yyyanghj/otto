@@ -1,5 +1,5 @@
 <template>
-  <div class="extension" :class="{ disabled: !extension.enabled && !isApp }">
+  <div class="extension-list-item" :class="{ disabled: !extension.enabled && !isApp }">
     <div class="info" @click="handleClick">
       <div class="icon">
         <img :src="imgUrl" alt />
@@ -7,17 +7,15 @@
       <div class="name">{{ extension.name }}</div>
     </div>
 
-    <div class="right">
-      <div v-show="label" class="label">{{ label }}</div>
+    <div v-show="label" class="label">{{ label }}</div>
 
-      <div class="action">
-        <div class="icon" :class="{ disabled: !extension.optionsUrl }" @click="handleClickSetting">
-          <icon-heroicons-outline-cog />
-        </div>
+    <div class="action">
+      <div class="icon" :class="{ disabled: !extension.optionsUrl }" @click="handleClickSetting">
+        <icon-heroicons-outline-cog />
+      </div>
 
-        <div class="icon" @click="handleClickTrash">
-          <icon-heroicons-outline-trash />
-        </div>
+      <div class="icon" @click="handleClickTrash">
+        <icon-heroicons-outline-trash />
       </div>
     </div>
   </div>
@@ -26,12 +24,13 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineProps } from 'vue';
 import * as utils from '../utils';
+import { useStore } from '../store';
+
+const { toggleEnabled, launchApp, uninstall } = useStore();
 
 const props = defineProps<{
   extension: chrome.management.ExtensionInfo;
 }>();
-
-const emit = defineEmits(['click', 'click-trash']);
 
 const isApp = computed(() => {
   return utils.isApp(props.extension);
@@ -55,11 +54,15 @@ const label = computed(() => {
 });
 
 const handleClick = () => {
-  emit('click', props.extension);
+  if (isApp.value) {
+    launchApp(props.extension.id);
+  } else {
+    toggleEnabled(props.extension.id);
+  }
 };
 
 const handleClickTrash = () => {
-  emit('click-trash', props.extension);
+  uninstall(props.extension.id);
 };
 
 const handleClickSetting = () => {
@@ -68,7 +71,7 @@ const handleClickSetting = () => {
 </script>
 
 <style lang="less">
-.extension {
+.extension-list-item {
   position: relative;
   display: flex;
   align-items: center;
@@ -85,8 +88,9 @@ const handleClickSetting = () => {
   .info {
     display: flex;
     align-items: center;
-    flex: 1;
+    width: 260px;
     overflow: hidden;
+    margin-right: 12px;
   }
 
   .icon {
@@ -111,14 +115,6 @@ const handleClickSetting = () => {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .right {
-    display: flex;
-    align-items: center;
-    width: 100px;
-    flex-shrink: 0;
-    margin-left: 12px;
   }
 
   .label {
