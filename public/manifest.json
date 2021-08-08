@@ -1,7 +1,7 @@
 {
   "name": "Otto",
   "description": "Otto help you to manage your Chrome extensions easily.",
-  "version": "0.1",
+  "version": "0.2.0",
   "manifest_version": 3,
   "permissions": [
     "storage",
