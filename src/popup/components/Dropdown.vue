@@ -49,16 +49,12 @@ const handler = () => {
 
 onMounted(() => {
   document.addEventListener('click', handler);
-
   requestAnimationFrame(() => {
     if (el.value) {
       const rect = el.value.getBoundingClientRect();
-      const top = rect.top + rect.height + 4;
-      const left = rect.left;
-
       position.value = {
-        top,
-        left,
+        top: rect.top + rect.height + 4,
+        left: rect.left,
       };
     }
   });

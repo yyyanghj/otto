@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import ExtensionListItem from './ExtensionListItem.vue';
 
 const props = defineProps<{
   extensions: chrome.management.ExtensionInfo[];

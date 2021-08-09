@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { injectStore } from './store';
-
+import ExtensionList from './components/ExtensionList.vue';
 const { allExtensions, initExtensions } = injectStore();
 
 initExtensions();
