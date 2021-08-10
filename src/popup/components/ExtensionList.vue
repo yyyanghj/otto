@@ -18,7 +18,7 @@ const props = defineProps<{
 .extension-list {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 24px;
+  padding-bottom: 12px;
 
   &.list {
     display: block;

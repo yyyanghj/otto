@@ -2,15 +2,11 @@ import * as utils from './utils';
 import { ref, computed, inject, InjectionKey, Ref, provide } from 'vue';
 
 const getOrder = (ext: chrome.management.ExtensionInfo) => {
-  if (utils.isApp(ext)) {
-    return 4;
+  if (ext.enabled || utils.isApp(ext)) {
+    return 1;
   }
 
-  if (ext.enabled) {
-    return 2;
-  }
-
-  return 0;
+  return -1;
 };
 
 type Store = {

@@ -26,6 +26,8 @@
 import { ref, computed } from 'vue';
 import { injectStore } from './store';
 import ExtensionList from './components/ExtensionList.vue';
+import Dropdown from './components/Dropdown.vue';
+
 const { allExtensions, initExtensions } = injectStore();
 
 initExtensions();
@@ -57,7 +59,7 @@ const extensions = computed(() => {
   display: flex;
   flex-flow: column nowrap;
   width: 375px;
-  min-height: 240px;
+  min-height: 200px;
   max-height: 600px;
   overflow: hidden;
 

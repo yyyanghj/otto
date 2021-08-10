@@ -2,40 +2,49 @@
   <div ref="el" class="dropdown">
     <div class="dropdown-select" @click.stop="showOptions = true">{{ text }}</div>
     <icon-feather-chevron-down class="icon" />
-    <div
-      v-show="showOptions"
-      class="dropdown-list"
-      :style="{ left: `${position.left}px`, top: `${position.top}px` }"
-    >
-      <div
-        v-for="(item, index) of options"
-        :key="`${item.text}_${index}`"
-        class="dropdown-option"
-        @click="handleOptionClick(item.value)"
-      >
-        {{ item.text }}
+
+    <Popup v-if="showOptions" :position="position">
+      <div class="dropdown-list">
+        <div
+          v-for="(item, index) of options"
+          :key="`${item.text}_${index}`"
+          class="dropdown-option"
+          @click="handleOptionClick(item.value)"
+        >
+          {{ item.text }}
+        </div>
       </div>
-    </div>
+    </Popup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, onMounted, onUnmounted, computed } from 'vue';
+import { useRect } from '../use-rect';
+import Popup from './Popup.vue';
 
 const props = defineProps<{
   value: unknown;
   options: Array<{ text: string; value: unknown }>;
 }>();
 
-const position = ref({ left: 0, top: 0 });
+const el = ref<HTMLDivElement>();
+const rect = useRect(el);
+
+const position = computed(() => {
+  const { top, height, left } = rect.value;
+
+  return {
+    top: top + height + 4,
+    left: left,
+  };
+});
 
 const text = computed(() => {
   return props.options.find(item => item.value === props.value)?.text || '';
 });
 
 const showOptions = ref(false);
-
-const el = ref<HTMLDivElement>();
 
 const emits = defineEmits(['update:value']);
 
@@ -49,15 +58,6 @@ const handler = () => {
 
 onMounted(() => {
   document.addEventListener('click', handler);
-  requestAnimationFrame(() => {
-    if (el.value) {
-      const rect = el.value.getBoundingClientRect();
-      position.value = {
-        top: rect.top + rect.height + 4,
-        left: rect.left,
-      };
-    }
-  });
 });
 
 onUnmounted(() => {
@@ -90,26 +90,26 @@ onUnmounted(() => {
     height: 20px;
     margin-left: 4px;
   }
+}
 
-  .dropdown-list {
-    width: 120px;
-    display: block;
-    position: fixed;
-    left: 0;
-    padding: 4px 0;
-    z-index: 999;
-    border: 1px solid var(--color-natural-3);
-    background: var(--color-natural-1);
-  }
+.dropdown-list {
+  width: 120px;
+  display: block;
 
-  .dropdown-option {
-    padding: 4px 12px;
-    cursor: pointer;
-  }
+  padding: 4px 0;
 
-  .dropdown-option:hover {
-    background: var(--color-primary);
-    color: var(--color-natural-1);
-  }
+  border-radius: 4px;
+  border: 1px solid var(--color-natural-3);
+  background: var(--color-natural-1);
+}
+
+.dropdown-option {
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background: var(--color-primary);
+  color: var(--color-natural-1);
 }
 </style>
