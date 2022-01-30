@@ -1,5 +1,5 @@
 # Otto
-Otto help you to manage your Chrome extensions easily.
+A Chrome extension to manage extensions more convenient.
 
 ![screenshot](./res/screenshot.jpg)
 
