@@ -2,7 +2,7 @@
   <div class="extension-list-item" :class="{ disabled: !extension.enabled && !isApp }">
     <div class="info" @click="handleClick">
       <div class="icon">
-        <img :src="imgUrl" alt />
+        <img :src="imgUrl" />
       </div>
       <div class="name">{{ extension.name }}</div>
     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import * as utils from '../utils';
 import { useStore } from '../store';
 

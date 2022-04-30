@@ -4,21 +4,9 @@
       <div class="filter-box">
         <input v-model="filterText" class="filter-input" type="text" />
       </div>
-      <Dropdown v-model:value="filterType" :options="dropdownOptions" />
     </header>
 
-    <ExtensionList :extensions="extensions" layout="list" />
-
-    <!-- <footer class="footer">
-      <div class="layout-options">
-        <div class="icon active">
-          <icon-heroicons-outline-view-list />
-        </div>
-        <div class="icon">
-          <icon-heroicons-outline-view-grid />
-        </div>
-      </div>
-    </footer> -->
+    <ExtensionList :extensions="extensions" />
   </main>
 </template>
 
@@ -26,7 +14,6 @@
 import { ref, computed } from 'vue';
 import { injectStore } from './store';
 import ExtensionList from './components/ExtensionList.vue';
-import Dropdown from './components/Dropdown.vue';
 
 const { allExtensions, initExtensions } = injectStore();
 
@@ -34,12 +21,6 @@ initExtensions();
 
 const filterType = ref<null | 'hosted_app' | 'extension'>(null);
 const filterText = ref<string>('');
-
-const dropdownOptions = [
-  { text: 'All', value: null },
-  { text: 'App', value: 'hosted_app' },
-  { text: 'Extension', value: 'extension' },
-];
 
 const extensions = computed(() => {
   return allExtensions.value.filter(ext => {

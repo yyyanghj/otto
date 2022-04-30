@@ -1,6 +1,7 @@
 <template>
-  <div class="extension-list" :class="layout">
+  <div class="extension-list">
     <ExtensionListItem v-for="ext of extensions" :key="ext.id" :extension="ext" />
+    <div v-if="!extensions.length" class="empty">No Item Found</div>
   </div>
 </template>
 
@@ -10,25 +11,20 @@ import ExtensionListItem from './ExtensionListItem.vue';
 
 const props = defineProps<{
   extensions: chrome.management.ExtensionInfo[];
-  layout: 'grid' | 'list';
 }>();
 </script>
 
 <style lang="less">
 .extension-list {
+  display: block;
   flex: 1;
   overflow-y: auto;
   padding-bottom: 12px;
 
-  &.list {
-    display: block;
-  }
-
-  &.grid {
-    padding: 0 20px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+  .empty {
+    padding: 50px;
+    text-align: center;
+    color: var(--color-natural-6);
   }
 }
 </style>
