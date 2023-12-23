@@ -1,5 +1,5 @@
 # Otto
-A Chrome extension to manage extensions more convenient.
+Browser tabs management should be efficient.
 
 ![screenshot](./res/screenshot.jpg)
 
