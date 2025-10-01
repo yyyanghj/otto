@@ -1,14 +1,9 @@
 # Otto
-Browser tabs management should be efficient.
 
-![screenshot](./res/screenshot.jpg)
+Easily manage your browser extensions in popup
 
-## Feature
-- [x] enable/disable extensions
-- [x] launch/uninstall apps
-- [x] filter
-- [ ] group
+<img src="./resources/otto.png" alt="otto" width="320"/>
 
-## How to use
-1. Download the latese release and upzip it.
-2. Open Chrome -> Menu -> More Tools -> Extensions -> Load unpacked -> Select 
+# How to use
+Download the latest release and upzip it.
+Open Chrome -> Menu -> More Tools -> Extensions -> Load unpacked -> Select
